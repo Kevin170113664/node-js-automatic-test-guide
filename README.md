@@ -24,7 +24,7 @@
 
 为什么待测试的是纯函数就很简单呢？让我们来复习一下javascript里纯函数的定义。
 
-##### [纯函数](https://en.wikipedia.org/wiki/Pure_function)
+#### [纯函数](https://en.wikipedia.org/wiki/Pure_function)
 - 接受相同的输入时一定能产生相同的输出
     - 函数的输出值**只可以**与入参有关
 - 不能有副作用
