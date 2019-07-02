@@ -95,7 +95,7 @@ it('should be able to calculate total price according price response', () => {
 
 没错，只把我们的准备数据从两个基础类型变量变成一大坨Object，就能让这个测试看起来十分臃肿。
 
-这种时候，我的建议是不要把这一大坨准备的数据放在测试体里，你可以把这一大坨准备数据变成JSON格式存在一个称为```Fixture``的文件夹下。然后从测试体里引用这个JSON文件即可。
+这种时候，我的建议是不要把这一大坨准备的数据放在测试体里，你可以把这一大坨准备数据变成JSON格式存在一个称为```Fixture```的文件夹下。然后从测试体里引用这个JSON文件即可。
 
 > Fixture一般存放测试数据集
 
@@ -113,7 +113,7 @@ it('should be able to calculate total price according price response', () => {
 
 是不是感觉一下子烦恼尽消，犹如夏日炎炎挥汗如雨时喝到了一瓶冰冻过的维他柠檬茶？
 
-//TODO 要讲一下假如多个测试里出现测试数据集有overlap时我们应该要怎么做
+// TODO 要讲一下假如多个测试里出现测试数据集有overlap时我们应该要怎么做
 
 接下来，请看一下这个测试
 
