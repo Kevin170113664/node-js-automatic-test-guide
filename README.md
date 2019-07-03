@@ -18,7 +18,7 @@
 
 ### 初窥门径
 
-既然叫automatic test guide，那我自然要从最简单的pure function测试讲起。
+既然叫automatic test guide，那我自然要从最简单的纯函数测试讲起。
 
 为什么这种测试最简单呢？因为待测试的是纯函数（pure function）。
 
