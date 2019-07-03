@@ -30,14 +30,14 @@
 - 不能有副作用
     - 副作用包含改变引用类型```reference arguments```入参，触发事件，触发输出设备执行I/O输出等
     - 允许修改基本类型的入参
- 
+
 > 基本类型 [boolean, null, undefined, String, number] 
 >
 > 引用类型 [Array, Function, Object]
 
-那么，接下来我要上测试了，测试体还是老套路，使用given，when，then三部曲。如果你还没听过这三部曲，建议移步[这里](https://martinfowler.com/bliki/GivenWhenThen.html)了解一下。
+那么，接下来我要上测试了，测试体将使用given，when，then三部曲来撰写。如果你还没听过这三部曲，建议移步[这里](https://martinfowler.com/bliki/GivenWhenThen.html)了解一下。
 
-```javascript 1.6
+```javascript
 it('should be able to calculate total price according to unit price and quantity', () => {
   //given
   const quantity = 5;
@@ -200,8 +200,21 @@ it('should be able to calculate prices according to price response', () => {
 
 ### 小有成就
 
+// TODO 这里想介绍一下关于涉及数据库读写的测试
+// 会讨论直接访问数据库的可能性，测试速度优化，测试数据互相影响的解决方案，脏数据回收。
+// 如果不引入真正的数据库来做测试，那又会怎么样。使用和生产环境不一样的数据库又当如何
+// 这里不想涉及隔离数据库的打桩，模拟等解决方案
+
 ### 驾轻就熟
+
+// TODO 介绍测试隔离的使用
+// spy、stub、mock
 
 ### 炉火纯青
 
+// TODO 介绍异步测试的案例
+
 ### 一代宗师
+
+// TODO 我需要定义一下这个境界是怎么样的
+
