@@ -67,7 +67,7 @@ const calculateTotalPrice = (quantity, unitPrice) => quantity * unitPrice
 假如我们需要从一个第三方API的response中计算出totalPrice，那么这个测试可能变成这样
 
 ```javascript
-it('should be able to calculate total price according price response', () => {
+it('should be able to calculate total price according to price response', () => {
   const priceResponse = {
     supermarket: [
       {
@@ -102,7 +102,7 @@ it('should be able to calculate total price according price response', () => {
 这时候这个测试就会变成这样
 
 ```javascript
-it('should be able to calculate total price according price response', () => {
+it('should be able to calculate total price according to price response', () => {
   const priceResponse = require('../Fixture/price-response.json');
   
   const totalPrice = calculateTotalPrice(priceResponse);
@@ -113,12 +113,42 @@ it('should be able to calculate total price according price response', () => {
 
 是不是感觉一下子烦恼尽消，犹如夏日炎炎挥汗如雨时喝到了一瓶冰冻过的维他柠檬茶？
 
-// TODO 要讲一下假如多个测试里出现测试数据集有overlap时我们应该要怎么做
+但是这样做，有可能还是有问题。当你有多个测试用例需要共享一部分测试数据集的时候如果还是分JSON存储，那你很容易把KPI（假如KPI和代码量挂钩的话><）做上去，为啥啊，太多重复的大JSON文件了呗。
+
+测试代码，也请像对待产品代码一样对待，如果有重复的测试数据集，我们也需要对其进行去重。
+
+你可以抽取一些创建测试数据的函数，可以用一些工厂方法来产生测试数据，还可以写query从测试数据集的JSON里pick你想要的数据。
+
+但是有一点规则请遵守，那就是不要过于吝啬过于精简你的这些为造数据而产生的函数们。因为测试的一大作用就是充当文档，让读者快速了解到一些重要变量在runtime时长什么样。没有人喜欢读晦涩难懂的文档。
+
+在我看来，测试的可读性是稍大于其代码的整洁性的。这个平衡每个团队都不一样，希望读者们都能找到自己团队中大家都能接受的平衡点。
+
+下面我来放一个具有明显反模式测试体
+
+```javascript
+it('should be able to calculate prices according to price response', () => {
+  const rawPriceResponse = require('../Fixture/price-response.json');
+  const priceResponse = _.chain(rawPriceResponse)
+    .values()
+    .flatMap((products) => _.map(products, (product) => ({
+        ...product,
+        quantity: product.quantity || 0
+      }))
+    )
+    .filter({price: 0})
+    .value();
+    
+  const prices = calculatePrices(priceResponse);
+  
+  expect(prices).toEqual(...);
+})
+
+```
 
 接下来，请看一下这个测试
 
 ```javascript
-it('should be able to calculate prices according price response', () => {
+it('should be able to calculate prices according to price response', () => {
   const priceResponse = require('../Fixture/price-response.json');
   
   const prices = calculatePrices(priceResponse);
