@@ -200,7 +200,7 @@ it('should be able to calculate prices according to price response', () => {
 
 ### 小有成就
 
-#####TODO
+##### TODO
 - [ ] 这里想介绍一下关于涉及数据库读写的测试
 - [ ] 会讨论直接访问数据库的可能性，测试速度优化，测试数据互相影响的解决方案，脏数据回收。
 - [ ] 如果不引入真正的数据库来做测试，那又会怎么样。使用和生产环境不一样的数据库又当如何
@@ -208,16 +208,16 @@ it('should be able to calculate prices according to price response', () => {
 
 ### 驾轻就熟
 
-#####TODO
+##### TODO
 - [ ] 介绍测试隔离的使用? spy、stub、mock
 
 ### 炉火纯青
 
-#####TODO
+##### TODO
 - [ ] 介绍异步测试的案例?
 
 ### 一代宗师
 
-#####TODO
+##### TODO
 - [ ] 我需要定义一下这个境界是怎么样的
 
