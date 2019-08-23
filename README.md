@@ -273,6 +273,10 @@ TODO 这里需要一个不那么致命，边缘的重量级数据库操作测试
 
 > 请确保不要让你的测试在运行的时候进行一些无谓的数据准备，或者额外的数据清理，那有可能是极大的消耗。
 
+#### 小结
+
+假如涉及到网络调用，其处理方式跟连接数据库的测试大同小异。测试怎么做，有经验的人很快能找准平衡点让团队满意，没有经验的话就只能慢慢摸索了。掌握好以上测试套路的利弊会为你找平衡点做决策提供坚实的理论基础。
+
 ## 炉火纯青
 
 走到这一步，你已经是一个能打的Javascript自动化测试开发工程师了。
@@ -321,15 +325,47 @@ it('should be able to generate an order', () => {
 
 2.使用mock隔离随机因素
 
-。。。
+这是一个把随机变稳定的套路。好处在于我们可以正常对所有output做精确断言，提供的信心最高。
+```javascript
+jest.mock('uuid');
+const uuid = require('uuid');
+uuid.mockImplementation(() => `uuid-${uuid.mock.calls.length}`);
+
+it('should be able to generate an order', () => {
+  const orderInfo = { name: 'Lemon Tea', unitPrice: 20 };
+  
+  const order = generateOrder(orderInfo);
+  
+  expect(order).toEqual({
+    orderId: 'uuid-1',
+    name: 'Lemon Tea',
+    unitPrice: 20
+  });
+})
+```
 
 3.剔除掉随机因素，对结果做部分断言
 
-。。。
+这个套路就很容易理解了，随机部分不断言就行了。
+```javascript
+it('should be able to generate an order', () => {
+  const orderInfo = { name: 'Lemon Tea', unitPrice: 20 };
 
-##### TODO
-- [ ] 如何应对带有随机性质的函数？例如和日期相关的，需要生成随机数的还有uuid作为产出物的
-- [ ] 介绍异步测试的案例?
+  const order = generateOrder(orderInfo);
+
+  delete order.orderId;
+  expect(order).toEqual({
+    name: 'Lemon Tea',
+    unitPrice: 20
+  });
+})
+```
+
+这样的做法有个小问题，就是当随机部分很多的时候，你可能需要写一个循环或者做很多事情才能把随机部分从结果中剥离开来。
+
+#### 小结
+
+没有小结
 
 ## 一代宗师
 
