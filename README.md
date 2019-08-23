@@ -377,4 +377,5 @@ it('should be able to generate an order', () => {
 ##### TODO
 - [ ] 我需要定义一下这个境界是怎么样的
     - [ ] 能推动TDD开发的人
+    - [ ] 身经百战，深谙练习的重要性
     
