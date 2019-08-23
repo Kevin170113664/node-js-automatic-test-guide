@@ -277,22 +277,66 @@ TODO 这里需要一个不那么致命，边缘的重量级数据库操作测试
 
 走到这一步，你已经是一个能打的Javascript自动化测试开发工程师了。
 
-首先，你需要能学会应对掺杂着随机因素的测试用例。
+你需要学会应对掺杂着随机因素的测试用例。
 
-随机因素可以是即时时间，即时生成随机数和即时生成的uuid。
-这样的测试因为输入不是确定的，所以我们需要把不确定性变为确定性。
+随机因素可以是即时时间，即时生成的随机数和即时生成的uuid。
+这样的测试因为输入不是确定的，所以我们需要把不确定性变为确定性再做测试。
 
 有三种套路可以处理这种情况。
 
-1.从待测函数中剥离随机因素
+1. 从待测函数中剥离随机因素
+
+> 实现代码是这样的
+```javascript
+const uuid = require('uuid');
+const generateOrder = (order) => ({ orderId: uuid(), ...order });
+const order = generateOrder({ name: 'Lemon Tea', unitPrice: 20 });
+```
+
+> 先做一点重构变成这样
+```javascript
+const uuid = require('uuid');
+const generateOrder = (order, uuid) => ({ orderId: uuid, ...order });
+const order = generateOrder({ name: 'Lemon Tea', unitPrice: 20 }, uuid());
+```
+
+> 测试就能这样写了
+```javascript
+it('should be able to generate an order', () => {
+  const orderInfo = { name: 'Lemon Tea', unitPrice: 20 };
+  const uuid = uuid();
+  
+  const order = generateOrder(orderInfo, uuid);
+  
+  expect(order).toEqual({
+    orderId: uuid,
+    name: 'Lemon Tea',
+    unitPrice: 20
+  });
+})
+```
+
+这样写测试的话，生成随机因素的语句或者逻辑往往极度简单，测试时把随机因素剥离了，就变成测试纯函数了。
+假如剥离掉随机因素后会让你对测试的信心不足，那么请继续往下看。
+
 2.使用mock隔离随机因素
+
+。。。
+
 3.剔除掉随机因素，对结果做部分断言
+
+。。。
 
 ##### TODO
 - [ ] 如何应对带有随机性质的函数？例如和日期相关的，需要生成随机数的还有uuid作为产出物的
 - [ ] 介绍异步测试的案例?
 
 ## 一代宗师
+
+> Kevin你瞎说，你上面举例的测试都那么简单，真正做项目的时候哪有那么简单的事情。 你这讲的都是"道理我都懂，但是臣妾做不到啊"。
+> 真正的项目上都是一个function一两百行，写个测试得准备几小时数据，一天才多少工作时间，都写不了几个测试。
+
+（开始引入TDD）
 
 ##### TODO
 - [ ] 我需要定义一下这个境界是怎么样的
